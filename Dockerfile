@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy the compiled binary from the build stage
-COPY --from=build /app/target/release/real-time-incident-notification-service /usr/local/bin
+COPY --from=build /app/target/release/incident-company-service /usr/local/bin
 
 # Set the entrypoint
-ENTRYPOINT ["/usr/local/bin/real-time-incident-notification-service"]
+ENTRYPOINT ["/usr/local/bin/incident-company-service"]

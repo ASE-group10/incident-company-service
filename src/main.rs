@@ -7,7 +7,7 @@ use axum::routing::get;
 use chrono::Utc;
 use dotenvy::dotenv;
 use rand::prelude::IndexedRandom;
-use rand::thread_rng;
+use rand::rng;
 use serde::Serialize;
 use tokio::select;
 use tokio::sync::RwLock;
@@ -95,6 +95,7 @@ async fn main() {
         )
         .with_state(app_state);
 
+    println!("Starting up the server");
     let listener = tokio::net::TcpListener::bind(&format!("0.0.0.0:{}", PORT))
         .await
         .unwrap();
@@ -237,14 +238,14 @@ async fn send_real_time_incident_information() {
 
     let descriptions = vec!["A car accident on the highway", "A car accident on the street", "A car accident on the motorway", "A car accident on the road", "A car accident on the freeway"];
 
-    let random_location = street_names.choose(&mut thread_rng()).unwrap();
+    let random_location = street_names.choose(&mut rng()).unwrap();
 
     let new_incident = RealTimeIncident {
         incident_type: "Accident".to_string(),
         location: (&random_location.location).to_string(),
         lat: random_location.lat,
         long: random_location.long,
-        description: descriptions.choose(&mut thread_rng()).unwrap().to_string(),
+        description: descriptions.choose(&mut rng()).unwrap().to_string(),
         created_at: Utc::now().to_string(),
     };
 

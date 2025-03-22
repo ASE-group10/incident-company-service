@@ -16,7 +16,7 @@ use tower_http::cors::CorsLayer;
 use tower_http::trace::{DefaultMakeSpan, TraceLayer};
 use tracing::{info, subscriber, Level};
 
-const PORT: i32 = 8080;
+const PORT: i32 = 80;
 
 #[derive(Clone)]
 pub struct AppState {
@@ -80,7 +80,7 @@ async fn main() {
     subscriber::set_global_default(subscriber).expect("Tracing subscriber couldn't be loaded");
 
     let app = Router::new()
-        .route("/api/manage/health", get(|| async { r#"{"status": "UP"}"# }))
+        .route("/ics/manage/health", get(|| async { r#"{"status": "UP"}"# }))
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(DefaultMakeSpan::default().include_headers(true)),
